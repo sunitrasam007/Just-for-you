@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Just for you</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#fff4e6;--bg1:#1b1744;--bg2:#5b1f5e;--sun:#ffb627;--rose:#ff5c93;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:'Bricolage Grotesque',system-ui,sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--bg1),var(--bg2) 70%,#a63a6b);background-attachment:fixed;overflow-x:hidden}
+.sun{position:fixed;left:50%;bottom:-120px;width:320px;height:320px;margin-left:-160px;border-radius:50%;background:var(--sun);opacity:.9;z-index:0}
+.sea{position:fixed;left:0;right:0;bottom:0;height:90px;background:repeating-linear-gradient(0deg,#1b1744 0 6px,#2a2160 6px 12px);opacity:.85;z-index:0}
+main{position:relative;z-index:1;min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px 20px 120px}
+section{display:none;width:100%;max-width:440px;text-align:left}
+section.on{display:block;animation:in .5s ease}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){section.on{animation:none}}
+h1{font-size:2.3rem;line-height:1.1;font-weight:800;margin:0 0 14px}
+p{font-size:1.05rem;line-height:1.5;margin:0 0 16px}
+input{width:100%;font:inherit;font-size:1.2rem;padding:14px 16px;border-radius:14px;border:2px solid rgba(255,244,230,.4);background:rgba(255,244,230,.1);color:var(--ink);outline:none}
+input:focus-visible,button:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+input::placeholder{color:rgba(255,244,230,.55)}
+button{font:inherit;font-weight:800;font-size:1.05rem;padding:13px 20px;border:0;border-radius:14px;background:var(--sun);color:#2a1740;cursor:pointer;margin:6px 8px 0 0}
+button.alt{background:var(--rose);color:#fff}
+.msg{min-height:1.6em;margin-top:12px;color:var(--sun);font-weight:500}
+.shake{animation:sh .4s}
+@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.react{margin-top:16px;padding:12px 14px;border-radius:14px;background:rgba(255,244,230,.12);min-height:3em}
+.dots{font-size:.9rem;opacity:.75;margin-bottom:10px}
+.letter{font-family:'Caveat',cursive;font-size:1.65rem;line-height:1.35;background:#fff8ee;color:#2a1740;padding:24px 22px;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,.35);white-space:pre-wrap;transform:rotate(-.6deg);min-height:200px}
+.cap{display:flex;align-items:center;gap:14px;padding:16px;border-radius:14px;background:#fff8ee;color:#2a1740;font-weight:500;font-size:1.1rem;cursor:pointer;user-select:none;margin-bottom:14px}
+.cap:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.box{width:26px;height:26px;border:2px solid #7a6a8f;border-radius:6px;flex:none;display:grid;place-items:center;font-size:18px}
+.box.spin{border-radius:50%;border-color:#ffb627 #ffb627 transparent #ffb627;animation:rot .7s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.code{display:flex;justify-content:center;gap:10px;font-size:2.4rem;font-weight:800;letter-spacing:2px;background:#fff8ee;color:#2a1740;border-radius:14px;padding:14px;margin-bottom:12px;user-select:none;background-image:linear-gradient(170deg,transparent 46%,rgba(91,31,94,.45) 47% 52%,transparent 53%)}
+.code span{display:inline-block}
+.g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.g button{margin:0;font-size:2.2rem;padding:14px 0;background:rgba(255,244,230,.14);color:inherit;border:3px solid transparent}
+.g button.sel{border-color:var(--sun);background:rgba(255,182,39,.3)}
+.tc{max-height:240px;overflow-y:auto;background:rgba(255,244,230,.12);border-radius:14px;padding:14px 16px;margin-bottom:14px;border:2px solid rgba(255,244,230,.25)}
+.tc p{font-size:.95rem;margin:0 0 10px}
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:1rem;line-height:1.4;opacity:.5}
+.agree.ok{opacity:1}
+.agree input{width:22px;height:22px;margin-top:2px;flexshrink:0;accent-color:#ffb627}
+.agree input{flex:none}
+#cont:disabled{opacity:.45;cursor:not-allowed}
+.wrap{position:relative}
+.note{background:rgba(255,244,230,.14);border-left:4px solid var(--sun);padding:12px 14px;border-radius:10px;font-size:1rem}
+#sc{position:absolute;inset:0;width:100%;height:100%;border-radius:6px;touch-action:none;cursor:crosshair;transition:opacity .6s}
+</style>
+</head>
+<body>
+<div class="sun"></div><div class="sea"></div>
+<main>
+
+<section id="p1" class="on">
+  <h1>Hey Sonali 👋</h1>
+  <p>One quick check before you enter. Please prove you are not a robot.</p>
+  <div class="cap" id="cap" role="checkbox" aria-checked="false" tabindex="0"><span class="box" id="box"></span><span>I'm not a robot</span></div>
+  <div id="grid" style="display:none">
+    <p>Type the code you see</p>
+    <div class="code" id="code" aria-label="Captcha code"></div>
+    <input id="ci" maxlength="4" autocomplete="off" autocapitalize="characters" placeholder="Enter code" aria-label="Captcha code">
+    <div><button id="ver">Verify</button></div>
+  </div>
+  <div class="msg" id="m1" role="status"></div>
+</section>
+
+<section id="p2">
+  <h1>Terms &amp; Conditions</h1>
+  <p>Please read carefully. Scroll to the bottom to continue.</p>
+  <div class="tc" id="tc" tabindex="0" aria-label="Terms and conditions">
+    <p><b>1.</b> By continuing, you agree to read one small letter with a calm face.</p>
+    <p><b>2.</b> You agree not to laugh at any spelling mistakes, if there are any.</p>
+    <p><b>3.</b> The sender is not responsible for any smile, blush or fast heartbeat caused by this page.</p>
+    <p><b>4.</b> You may scratch the card gently. Scratching very hard is also allowed.</p>
+    <p><b>5.</b> No refund on smiles once they have been issued.</p>
+  </div>
+  <label class="agree"><input type="checkbox" id="ag" disabled> <span id="agt">I, <b id="who">Sonali</b>, agree to all terms and conditions.</span></label>
+  <div><button id="cont" disabled>Continue</button></div>
+</section>
+
+<section id="p3">
+  <h1 id="hi"></h1>
+  <p id="hint">Scratch the card to read it ✨</p>
+  <div class="wrap"><div class="letter" id="letter"></div><canvas id="sc" aria-label="Scratch to reveal the letter"></canvas></div>
+  
+</section>
+
+</main>
+<script>
+/* ======= EDIT YOUR LETTER HERE ======= */
+const LETTER = `Dear {name},
+
+I just wanted to confess something simple.
+
+I have a crush on you.
+
+Don't worry, this is a confession, not a job interview. I just wanted to tell you how I feel. Whatever you feel is completely okay! 😊
+
+— Sunit`;
+/* ===================================== */
+
+const $=id=>document.getElementById(id);
+const show=id=>{document.querySelectorAll('section').forEach(s=>s.classList.remove('on'));$(id).classList.add('on')};
+
+// Page 1: simple captcha
+const who='Sonali';
+let secret='';
+function newCode(){
+  const ch='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  secret=Array.from({length:4},()=>ch[Math.floor(Math.random()*ch.length)]).join('');
+  $('code').innerHTML=[...secret].map(c=>`<span style="transform:rotate(${Math.round(Math.random()*30-15)}deg) translateY(${Math.round(Math.random()*8-4)}px)">${c}</span>`).join('');
+  $('ci').value='';
+}
+let started=false;
+function startCap(){
+  if(started)return;started=true;
+  $('box').classList.add('spin');
+  setTimeout(()=>{
+    $('box').classList.remove('spin');$('box').textContent='✔';
+    $('cap').setAttribute('aria-checked','true');
+    $('m1').textContent='Hmm, suspicious. One more check 🤨';
+    $('grid').style.display='block';newCode();$('ci').focus();
+  },900);
+}
+$('cap').onclick=startCap;
+$('cap').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();startCap()}});
+function verify(){
+  if($('ci').value.trim().toUpperCase()===secret){show('p2');unlock()}
+  else{$('m1').textContent='Robot detected 🤖 Try again.';newCode()}
+}
+$('ver').onclick=verify;
+$('ci').addEventListener('keydown',e=>{if(e.key==='Enter')verify()});
+
+// Page 2: terms and conditions
+const tc=$('tc'),ag=$('ag'),cont=$('cont');
+function unlock(){
+  if(tc.scrollTop+tc.clientHeight>=tc.scrollHeight-4){ag.disabled=false;document.querySelector('.agree').classList.add('ok')}
+}
+tc.addEventListener('scroll',unlock);
+ag.onchange=()=>{cont.disabled=!ag.checked};
+cont.onclick=()=>{show('p3');letter()};
+
+// Page 3: scratch-to-reveal letter
+function letter(){
+  $('hi').textContent='A small letter for Sonali';
+  const el=$('letter'),cv=$('sc');
+  el.textContent=LETTER.replace('{name}',who);
+  requestAnimationFrame(()=>{
+    const r=el.getBoundingClientRect(),d=window.devicePixelRatio||1;
+    cv.width=r.width*d;cv.height=r.height*d;
+    const c=cv.getContext('2d');c.scale(d,d);
+    const g=c.createLinearGradient(0,0,r.width,r.height);
+    g.addColorStop(0,'#ffcf5a');g.addColorStop(.5,'#ff9fb8');g.addColorStop(1,'#ffb627');
+    c.fillStyle=g;c.fillRect(0,0,r.width,r.height);
+    c.fillStyle='rgba(42,23,64,.75)';c.font='700 26px Bricolage Grotesque, sans-serif';c.textAlign='center';
+    c.fillText('Scratch here ✨',r.width/2,r.height/2);
+    c.globalCompositeOperation='destination-out';
+    let down=false,n=0,done=false;
+    const pos=e=>{const b=cv.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top]};
+    const dot=e=>{const[x,y]=pos(e);c.beginPath();c.arc(x,y,24,0,7);c.fill();if(++n%8===0)check()};
+    const check=()=>{
+      if(done)return;
+      const w=cv.width,h=cv.height,data=c.getImageData(0,0,w,h).data;let clear=0,tot=0;
+      for(let i=3;i<data.length;i+=64){tot++;if(data[i]===0)clear++}
+      if(clear/tot>.45){done=true;cv.style.opacity=0;cv.style.pointerEvents='none';$('hint').style.display='none'}
+    };
+    cv.addEventListener('pointerdown',e=>{down=true;cv.setPointerCapture(e.pointerId);dot(e)});
+    cv.addEventListener('pointermove',e=>{if(down)dot(e)});
+    cv.addEventListener('pointerup',()=>{down=false;check()});
+  });
+}
+</script>
+</body>
+</html>
